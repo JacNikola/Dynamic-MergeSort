@@ -1,23 +1,27 @@
 #include<iostream>
+#include<time.h>
+#include<stdlib.h>
 #include<cmath> //for ceil()
 using namespace std;
 
 
 void SplitList(int* , int* , int* , int , int );
 int* MergeLists(int* , int* , int );
-int* MergeSort(int* , int )
+int* MergeSort(int* , int );
 
 int main()
 {
+	srand(time(0));
 	int size;
 	cout<< "Enter the size of the array: ";
 	cin>> size;
 	int* arr = new int[size];
-	cout<< "Enter the elements: \n";
+	cout<< "The elements: \n";
 	for (int i = 0; i < size; i++)
 	{
 		cout<< "[" << i << "]: ";
-		cin>> arr[i];
+		arr[i] = rand(); //takes input automatically
+		cout<< arr[i] << "\n";
 	}
 	arr = MergeSort(arr, size);
 
@@ -44,8 +48,13 @@ int* MergeSort(int* arr, int size)
 	arrL = MergeSort(arrL, mid);
 	arrR = MergeSort(arrR, size-mid);
 	
-	return MergeLists(arrL, arrR, size);	 
+	int* new_arr;
+	new_arr = MergeLists(arrL, arrR, size);	 
 	
+	//Deallocating the orphaned sub arrays
+	delete[]arrL; 
+	delete[]arrR;
+	return new_arr;	
 }
 
 //FUNCTION TO SPLIT AN ARRAY INTO TWO SUB ARRAYS
@@ -97,6 +106,14 @@ int* MergeLists(int* arrL, int* arrR, int size)
 	}
 	return new_arr;
 }
+
+
+
+
+
+
+
+
 
 
 
